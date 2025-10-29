@@ -105,8 +105,8 @@ class DatabaseService:
             conn = sqlite3.connect(str(db_path))
             cursor = conn.cursor()
             
-            # Execute the schema (CREATE TABLE statement)
-            cursor.execute(schema)
+            # Execute schema; allow multi-statement definitions from LLM output
+            conn.executescript(schema)
             
             # Load CSV data
             file_path = csv_info.get('file_path') or csv_info.get('filepath')
